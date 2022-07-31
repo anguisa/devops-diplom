@@ -124,3 +124,4 @@ namespace/stage created
 deployment.apps/diplom created
 service/diplom created
 ```
+[Образ](https://hub.docker.com/repository/docker/anguisa/diplom_app)
