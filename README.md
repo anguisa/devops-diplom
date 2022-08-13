@@ -302,6 +302,7 @@ ubuntu@node3:~$ sudo apt install nfs-common
 ![Atlantis3](img/atlantis3.png)  
 
 Сгенерированные манифесты - [manifests](https://github.com/anguisa/devops-diplom-k8s/tree/main/atlantis/manifests)  
+PR с комментариями atlantis - [https://github.com/anguisa/devops-diplom-terraform/pull/13](https://github.com/anguisa/devops-diplom-terraform/pull/13)  
 
 Содержимое неймспейса `stage`:  
 ![NS_stage](img/ns_stage.png)  
