@@ -17,15 +17,15 @@ provider_installation {
   }
 }
 ```
-- Созданы директории [bucket](https://github.com/anguisa/devops-diplom-terraform/tree/main/terraform/bucket) и [infrastructure](https://github.com/anguisa/devops-diplom-terraform/tree/main/terraform/infrastructure)
+- Созданы директории [bucket](https://github.com/anguisa/devops-diplom-terraform/tree/main/bucket) и [infrastructure](https://github.com/anguisa/devops-diplom-terraform/tree/main/infrastructure)
 - В них добавлены файлы .gitignore
 - Получен OAuth-token по [ссылке](https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token)
 - Получен id облака (cloud_id) по [ссылке](https://console.cloud.yandex.ru/cloud)
 - Получен id каталога (folder_id): облако -> подпапка (default) -> id из url по [ссылке](https://console.cloud.yandex.ru/folders/b1gcefcbnh0ok32bkvif)
 - Выбрана зона доступности по умолчанию (zone)
 
-### [bucket](https://github.com/anguisa/devops-diplom-terraform/tree/main/terraform/bucket)  
-[Документация](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-state-storage)
+### [bucket](https://github.com/anguisa/devops-diplom-terraform/tree/main/bucket)  
+[Документация](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-state-storage)  
 Отдельно с помощью Terraform создан бакет, в который будут загружаться состояния.  
 - Созданы конфигурационные файлы `main.tf` и `versions.tf` с блоками `terraform` и `provider`
 - В консоли выполнена установка переменной окружения с токеном `export YC_TOKEN=...`
@@ -150,7 +150,6 @@ namespace/stage created
 Настройки kube-prometheus - [https://github.com/anguisa/devops-diplom-k8s/tree/main/monitoring](https://github.com/anguisa/devops-diplom-k8s/tree/main/monitoring)  
 Настройки приложения - [https://github.com/anguisa/devops-diplom-k8s/tree/main/diplom-app](https://github.com/anguisa/devops-diplom-k8s/tree/main/diplom-app)  
 Настройки atlantis - [https://github.com/anguisa/devops-diplom-k8s/tree/main/atlantis](https://github.com/anguisa/devops-diplom-k8s/tree/main/atlantis)  
-Репозиторий для настройки kubernetes - [https://github.com/anguisa/devops-diplom-k8s](https://github.com/anguisa/devops-diplom-k8s)  
 Url графаны - [http://158.160.6.221:8000/grafana](http://158.160.6.221:8000/grafana), логин/пароль - admin/admin12345  
 Url тестового приложения - [http://158.160.6.221:8000/app](http://158.160.6.221:8000/app)  
 PR с комментариями atlantis - [https://github.com/anguisa/devops-diplom-terraform/pull/13](https://github.com/anguisa/devops-diplom-terraform/pull/13)  
@@ -171,7 +170,7 @@ PR с комментариями atlantis - [https://github.com/anguisa/devops-d
 
 Шаги:  
 - Установлен `go`
-- Установлены jb, gojsontoyaml, jsonnet
+- Установлены `jb`, `gojsontoyaml`, `jsonnet`
 ```bash
 [olga@manjaro devops]$ go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
 [olga@manjaro devops]$ go install github.com/brancz/gojsontoyaml@latest
@@ -198,8 +197,8 @@ PR с комментариями atlantis - [https://github.com/anguisa/devops-d
 [olga@manjaro monitoring]$ kubectl apply -f manifests/
 ```
 (удаление возможно с помощью `kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup`)
-- Сгенерированные `yaml` файлы для графаны с правками можно посмотреть в [grafana-config.yaml](https://github.com/anguisa/devops-diplom-k8s/tree/main/monitoring/manifests/grafana-config.yml) 
-и [grafana-ingress.yaml](https://github.com/anguisa/devops-diplom-k8s/tree/main/monitoring/manifests/grafana-ingress.yml)
+- Сгенерированные `yaml` файлы для графаны с правками можно посмотреть в [grafana-config.yaml](https://github.com/anguisa/devops-diplom-k8s/blob/main/monitoring/manifests/grafana-config.yaml) 
+и [grafana-ingress.yaml](https://github.com/anguisa/devops-diplom-k8s/blob/main/monitoring/manifests/grafana-ingress.yaml)
 
 ![Результат](img/monitoring.png)  
 
@@ -240,7 +239,7 @@ wrote diplom-app/qbec.yaml
 
 ## Создание балансировщика для доступа к графане и приложению
 
-- В terraform [lb.tf](https://github.com/anguisa/devops-diplom-terraform/tree/main/terraform/infrastructure/lb.tf) добавлен сетевой балансировщик.  
+- В terraform [lb.tf](https://github.com/anguisa/devops-diplom-terraform/blob/main/infrastructure/lb.tf) добавлен сетевой балансировщик.  
   Для этого создана целевая группа с воркер-нодами, добавлен Network load balancer с двумя слушателями -
   на 8000 и 443 порту (направляет трафик на порты 80 и 443 ингресса соответственно).  
   В качестве healthcheck использован /healthz у ingress-nginx-controller (порт 10254). Для этого выполнено:
@@ -255,7 +254,7 @@ wrote diplom-app/qbec.yaml
             scheme: HTTP
 ```
 
-Итог: приложение доступно по адресу [http://158.160.6.221:8000/app](http://158.160.6.221:8000/app), графана - [http://158.160.6.221:8000/grafana](http://158.160.6.221:8000/grafana)  
+Итог: приложение доступно по адресу [http://158.160.6.221:8000/app](http://158.160.6.221:8000/app), графана - [http://158.160.6.221:8000/grafana](http://158.160.6.221:8000/grafana)  (admin/admin12345)
 ![Балансировщик](img/lb.png)
 
 ## Деплой atlantis для отслеживания инфраструктуры
@@ -311,7 +310,9 @@ ubuntu@node3:~$ sudo apt install nfs-common
 
 Для мониторинга Kubernetes кластера в графану импортировано несколько готовых дашбордов.  
 ![Графана1](img/grafana1.png)  
-![Графана2](img/grafana2.png)
+![Графана2](img/grafana2.png)  
+- [k8s-cluster-metrics](http://158.160.6.221:8000/grafana/d/taQlRuxik/k8s-cluster-metrics?orgId=1&refresh=1m)
+- [kubernetes-views-pods](http://158.160.6.221:8000/grafana/d/k8s_views_pods/kubernetes-views-pods?orgId=1&refresh=30s&var-datasource=prometheus&var-namespace=stage&var-pod=atlantis-0&var-resolution=30s)
 
 # Установка и настройка CI/CD
 
@@ -353,7 +354,7 @@ jenkins@jenkins-server-654679d85d-9d7n2:/$ cat /var/jenkins_home/secrets/initial
   - Определяется либо тег, либо краткий хеш коммита. Генерируется имя образа.
   - С помощью `kaniko` собирается и пушится docker-образ (сборка без docker) (в контейнере с `kaniko`).
   - Если изначально пришло событие создания тега, выполняется патч деплоймента с новым именем образа (в контейнере с `kubectl`).
-- [Jenkinsfile](https://github.com/anguisa/devops-diplom-app/blob/9006ad33282cd4a3223291c568de67ddfb9a2e91/Jenkinsfile) размещён в репозитории, однако 
+- [Jenkinsfile](https://github.com/anguisa/devops-diplom-app/blob/main/Jenkinsfile) размещён в репозитории, однако 
 в Jenkins он скопирован (т.к. используется обычный Pipeline).  
 Плагины github с poll scm работают некорректно для тегов - срабатывают только в случае наличия новых коммитов.
 - Из-за jenkins добавлены ресурсы к ВМ в кластере (RAM, vCPU, доля vCPU).
