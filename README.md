@@ -34,7 +34,7 @@ provider_installation {
 - В `output` выгружены ключи. Секретный ключ записан в файл `terraform.tfstate`
 - Выполнен `terraform apply` для применения изменений.
 
-### [infrastructure](https://github.com/anguisa/devops-diplom-terraform/tree/main/terraform/infrastructure)
+### [infrastructure](https://github.com/anguisa/devops-diplom-terraform/tree/main/infrastructure)
 - Созданы конфигурационные файлы `main.tf` и `versions.tf` с блоками `terraform` и `provider`
 - В консоли выполнена установка переменных окружения: токен `export YC_TOKEN=...`, id ключа `export YC_ACCESS_KEY_ID=...`, секретный ключ `export YC_SECRET_ACCESS_KEY=...`
   (ключи получены на прошлом этапе)
